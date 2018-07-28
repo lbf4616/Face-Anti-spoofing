@@ -11,4 +11,4 @@ texture analysis against video attacks.
  # Libraries: 
  Dlib; opencv3.14; eigen;
  
- # For free to contact me lbf4616@163.com
+For free to contact me lbf4616@163.com
