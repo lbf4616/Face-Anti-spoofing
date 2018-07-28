@@ -8,4 +8,5 @@ previously unseen mask type whereas texture based methods fail to generalize bey
 cascade system combining two complementary attackspecific spoof detectors, i.e. utilize pulse detection against print attacks and color 
 texture analysis against video attacks.
 
-Libraries: Dlib; opencv3.14; eigen;
+ # Libraries: 
+ Dlib; opencv3.14; eigen;
