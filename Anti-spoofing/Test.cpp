@@ -16,7 +16,7 @@ Mat read_test_feature(const string fileName, string Out);
 Mat read_train_label(const string fileName, string Out);
 Mat read_test_label(const string fileName, string Out);
 
-string Data = "d://LBPfeature.csv";
+string Data = "d://LBPfeature2.csv";
 
 int main()
 {
@@ -40,19 +40,19 @@ int main()
 	labels = read_train_label(Data, Out);
 	//训练参数
 	Ptr<SVM> svm = SVM::create();
-	/*svm->setType(SVM::C_SVC);
+	svm->setType(SVM::C_SVC);
 	svm->setKernel(SVM::RBF);
-	svm->setGamma(0.01);
-	svm->setC(10.0);
-	svm->setTermCriteria(TermCriteria(CV_TERMCRIT_EPS, 1000, FLT_EPSILON));*/
+	svm->setGamma(0.05);
+	svm->setC(10000.0);
+	svm->setTermCriteria(TermCriteria(CV_TERMCRIT_EPS, 1000, FLT_EPSILON));
 	//训练分类器
-	svm->trainAuto(trainData, ROW_SAMPLE, labels);
+	svm->train(trainData, ROW_SAMPLE, labels);
 	//保存训练器
 	svm->save("d://LBP.txt");
 	//cout << "save as /mnist_dataset/mnist_svm.xml" << endl;
 	//下载分类器
 	//cout << "开始导入SVM文件...\n";
-	//Ptr<SVM> svm1 = StatModel::load<SVM>("mnist_dataset/mnist_svm.xml");
+	Ptr<SVM> svm1 = StatModel::load<SVM>("d://LBP.txt");
 	//cout << "成功导入SVM文件...\n";
 	//读取测试数据
 	Mat testData;
@@ -66,14 +66,14 @@ int main()
 		Mat sample = testData.row(i);
 		float res = 0.0;
 		res = svm->predict(sample);
-		//cout << res << endl;
+		cout << res;
 		res = abs(res - tLabel.at<unsigned int>(i, 0)) <= FLT_EPSILON ? 1.f : 0.f;
 		count += res;
 	}
 	totalT += count;
 	cout << "准确率为：" << count / testData.rows * 100 << "%\n";
 
-	cout << totalT / 1.7 << "% " << endl;
+	//cout << totalT / 1.7 << "% " << endl;
 	std::system("pause");
 	return 0;
 }
@@ -87,15 +87,15 @@ Mat read_train_feature(const string fileName, string Out)
 	string Num, Num2;
 	Mat DataMat;
 	//DataMat = Mat::zeros(240, 6, CV_32FC1);
-	DataMat = Mat::zeros(19083, 708, CV_32FC1);
+	DataMat = Mat::zeros(5760, 177, CV_32FC1);
 	while (getline(ofs, lineStr))
 	{
 		string cut = lineStr.substr(14);
 		Num = lineStr.substr(0, 2);
 		Num2 = lineStr.substr(3, 2);
-		if (Num != "01" && Num != "02" && Num != "03")
+		if (Num != "04" && Num != "05" && Num != "06")
 		{
-			for (int j = 0; j < 708; j++) //708 or 6
+			for (int j = 0; j < 177; j++) //708 or 6
 			{
 				string E1 = cut.substr(0, cut.find_first_of(","));
 				cut = cut.substr(cut.find_first_of(",") + 1);
@@ -117,12 +117,12 @@ Mat read_train_label(const string fileName, string Out)
 	int i = 0;
 	Mat DataMat;
 	string Num, Num2;
-	DataMat = Mat::zeros(19083, 1, CV_32SC1);
+	DataMat = Mat::zeros(5760, 1, CV_32SC1);
 	while (getline(ofs, lineStr))
 	{
 		Num = lineStr.substr(0, 2);
 		Num2 = lineStr.substr(3, 2);
-		if (Num != "01" && Num != "02" && Num != "03")
+		if (Num != "04" && Num != "05" && Num != "06")
 		{
 			string E1 = lineStr.substr(lineStr.find_last_of(",") + 1);
 			DataMat.at<int>(i, 0) = (atof(E1.c_str()));
@@ -140,16 +140,16 @@ Mat read_test_feature(const string fileName, string Out)
 	string lineStr;
 	int i = 0;
 	Mat DataMat;
-	DataMat = Mat::zeros(1784, 708, CV_32FC1);
+	DataMat = Mat::zeros(540, 177, CV_32FC1);
 	string Num, Num2;
 	while (getline(ofs, lineStr))
 	{
 		string cut = lineStr.substr(14);
 		Num = lineStr.substr(0, 2);
 		Num2 = lineStr.substr(3, 2);
-		if (Num == "01" || Num == "02" || Num == "03")//&& Num2 != "02"
+		if (Num == "04" || Num == "05" || Num == "06")//&& Num2 != "02"
 		{
-			for (int j = 0; j < 708; j++) //708 or 6
+			for (int j = 0; j < 177; j++) //708 or 6
 			{
 				string E1 = cut.substr(0, cut.find_first_of(","));
 				cut = cut.substr(cut.find_first_of(",") + 1);
@@ -170,12 +170,12 @@ Mat read_test_label(const string fileName, string Out)
 	int i = 0;
 	Mat DataMat;
 	string Num, Num2;
-	DataMat = Mat::zeros(1784, 1, CV_32SC1);
+	DataMat = Mat::zeros(540, 1, CV_32SC1);
 	while (getline(ofs, lineStr))
 	{
 		Num = lineStr.substr(0, 2);
 		Num2 = lineStr.substr(3, 2);
-		if (Num == "01" || Num == "02" || Num == "03") // && Num2 != "02"
+		if (Num == "04" || Num == "05" || Num == "06") // && Num2 != "02"
 		{
 			string E1 = lineStr.substr(lineStr.find_last_of(",") + 1);
 			DataMat.at<int>(i, 0) = (atof(E1.c_str()));

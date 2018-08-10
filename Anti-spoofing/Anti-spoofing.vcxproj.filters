@@ -18,7 +18,7 @@
     <ClCompile Include="..\..\..\..\dlib-19.13\dlib\all\source.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="68.cpp">
+    <ClCompile Include="Anti-spoofing.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

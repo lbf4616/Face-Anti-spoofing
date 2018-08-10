@@ -1,32 +1,3 @@
-// The contents of this file are in the public domain. See LICENSE_FOR_EXAMPLE_PROGRAMS.txt
-/*
-
-    This example program shows how to find frontal human faces in an image and
-    estimate their pose.  The pose takes the form of 68 landmarks.  These are
-    points on the face such as the corners of the mouth, along the eyebrows, on
-    the eyes, and so forth.  
-    
-
-    This example is essentially just a version of the face_landmark_detection_ex.cpp
-    example modified to use OpenCV's VideoCapture object to read from a camera instead 
-    of files.
-
-
-    Finally, note that the face detector is fastest when compiled with at least
-    SSE2 instructions enabled.  So if you are using a PC with an Intel or AMD
-    chip then you should enable at least SSE2 instructions.  If you are using
-    cmake to compile this program you can enable them by using one of the
-    following commands when you create the build project:
-        cmake path_to_dlib_root/examples -DUSE_SSE2_INSTRUCTIONS=ON
-        cmake path_to_dlib_root/examples -DUSE_SSE4_INSTRUCTIONS=ON
-        cmake path_to_dlib_root/examples -DUSE_AVX_INSTRUCTIONS=ON
-    This will set the appropriate compiler options for GCC, clang, Visual
-    Studio, or the Intel compiler.  If you are using another compiler then you
-    need to consult your compiler's manual to determine how to enable these
-    instructions.  Note that AVX is the fastest but requires a CPU from at least
-    2011.  SSE4 is the next fastest and is supported by most current machines.  
-*/
-
 #include <dlib/opencv.h>  
 #include <opencv2/opencv.hpp>  
 #include <dlib/image_processing/frontal_face_detector.h>  
@@ -36,15 +7,22 @@
 #include <vector>
 #include <stdlib.h>
 #include <opencv2/core/mat.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/ml.hpp>
 #include <Eigen/Sparse>
 #include <Eigen/Dense>
 #include <math.h>
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <opencv2/imgproc.hpp>
+#include "opencv2/imgcodecs.hpp"
 
 using namespace dlib;
 using namespace std;
+using namespace Eigen;
+using namespace cv;
+using namespace cv::ml;
 
 int main()
 {
@@ -82,7 +60,7 @@ int main()
             cv_image<bgr_pixel> cimg(temp);
 
             // Detect faces 
-            std::vector<rectangle> faces = detector(cimg);
+            std::vector<dlib::rectangle> faces = detector(cimg);
             // Find the pose of each face.
             std::vector<full_object_detection> shapes;
             for (unsigned long i = 0; i < faces.size(); ++i)

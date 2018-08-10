@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\dlib-19.13\dlib\all\source.cpp" />
-    <ClCompile Include="68.cpp" />
+    <ClCompile Include="Anti-spoofing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="svm.h" />
@@ -76,6 +76,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>D:\visual studio 2015\Projects\Anti-spoofing\Anti-spoofing\include;D:\dlib-19.13;D:\opencv\opencv\build\include\opencv2;D:\opencv\opencv\build\include\opencv;D:\opencv\opencv\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\dlib-19.13\build\dlib\Release;D:\opencv\opencv\build\x64\vc14\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -115,6 +119,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opencv_world341.lib;dlib19.13.0_release_64bit_msvc1900.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
